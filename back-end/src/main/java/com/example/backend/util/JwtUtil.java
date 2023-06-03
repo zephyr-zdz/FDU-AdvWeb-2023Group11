@@ -8,7 +8,7 @@ import java.util.Base64;
 import java.util.Date;
 
 public class JwtUtil {
-    private static final String JWT_SECRET="4grdgjweb@fdu";
+    private static final String JWT_SECRET="8677df7fc3a34e26a61c034d5ec8245d";
     public static SecretKey generalKey(){
         byte[] encodedKey= Base64.getDecoder().decode(JWT_SECRET);
         return new SecretKeySpec(encodedKey,0,encodedKey.length,"AES");
