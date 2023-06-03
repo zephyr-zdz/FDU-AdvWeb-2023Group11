@@ -44,4 +44,18 @@ public class UserServiceImpl implements UserService {
             return new Response<>(1,"success",user);
         }
     }
+
+    @Override
+    public Response<Integer> getSchedule(int id) {
+        User user=userMapper.findUserByUserId(id);
+        return new Response<>(1,"success",user.getSchedule());
+    }
+
+    @Override
+    public Response<User> updateSchedule(int id,int schedule) {
+        User user=userMapper.findUserByUserId(id);
+        user.setSchedule(schedule);
+        userMapper.save(user);
+        return new Response<>(1,"success",user);
+    }
 }

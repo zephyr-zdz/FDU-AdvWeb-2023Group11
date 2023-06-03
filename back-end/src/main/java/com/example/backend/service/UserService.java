@@ -6,4 +6,6 @@ import com.example.backend.util.Response;
 public interface UserService {
     Response<User> login(String email, String password);
     Response<User> register(String email,String password);
+    Response<Integer> getSchedule(int id);
+    Response<User> updateSchedule(int id,int schedule);
 }

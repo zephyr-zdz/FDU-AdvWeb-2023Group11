@@ -14,11 +14,12 @@ public class JwtUtil {
         return new SecretKeySpec(encodedKey,0,encodedKey.length,"AES");
     }
 
-    public static String createJWT(final String id,final String subject){
+    public static String createJWT(final int id){
         Date now=new Date();
         JwtBuilder jwtBuilder= Jwts.builder()
-                .setId(id)
-                .setSubject(subject)
+                .setId("token")
+                .setSubject("token")
+                .claim("id",id)
                 .setIssuer("admin")
                 .setIssuedAt(now)
                 .signWith(SignatureAlgorithm.HS256,generalKey());
