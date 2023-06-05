@@ -21,4 +21,14 @@ public class User {
     private String password;
     @Column(name = "schedule")
     private Integer schedule;
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(int id, int schedule) {
+        this.userId = id;
+        this.schedule = schedule;
+    }
 }
