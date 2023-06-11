@@ -1,0 +1,36 @@
+<nav class="navbar">
+    <div class="navbar-left">
+        <!-- 导航栏左侧内容 -->
+    </div>
+    <div class="navbar-right">
+        <span>Hi, {{ email }}~</span>
+    </div>
+</nav>
+
+<div class="profile-container">
+    <h2>个人中心</h2>
+    <span class="description">人物造型</span>
+<!-- 'BeachBabe', 'BusinessMan', 'Doctor', 'FireFighter', 'Housewife', 'Policeman', 
+'Prostitute', 'Punk', 'RiotCop', 'Roadworker', 'Robber', 'Sheriff', 'Streetman', 'Waitress' -->
+    <select [(ngModel)]="selectedClothes">
+        <option value=1>BeachBabe</option>
+        <option value=2>BusinessMan</option>
+        <option value=3>Doctor</option>
+        <option value=4>FireFighter</option>
+        <option value=5>Housewife</option>
+        <option value=6>Policeman</option>
+        <option value=7>Prostitute</option>
+        <option value=8>Punk</option>
+        <option value=9>RiotCop</option>
+        <option value=10>Roadworker</option>
+    </select>
+    <p class="small-text">闯关越多，解锁的人物模型也越多哟~</p>
+
+
+    <div class="container">
+    <canvas #barChartCanvas></canvas>
+  </div>
+
+      <button class="btn enter-world-btn">进入世界</button>
+</div>
+
