@@ -23,7 +23,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .exposedHeaders("Authorization")
                 .allowCredentials(true)
                 .allowedMethods("*")
-                .allowedHeaders("*").maxAge(3600);
+                .allowedHeaders("*").maxAge
+                        (3600);
         WebMvcConfigurer.super.addCorsMappings(registry);
     }
 }
