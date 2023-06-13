@@ -12,7 +12,7 @@ export class RegisterComponent implements OnInit{
   password!: string;
   confirmPassword!: string;
 
-  private reg_url = "http://localhost:8000/api/user/register";
+  private reg_url = "http://124.221.137.186:8080/api/user/register";
 
   constructor(private router: Router,public http: HttpClient) {}
 
@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit{
         password: this.password,
       }, httpOptions).subscribe((response: any) => {
         window.alert(response.msg);
-        if(response.msg === "注册成功"){
+        if(response.code === 0){
           this.router.navigate(['/login']);
         }
       });

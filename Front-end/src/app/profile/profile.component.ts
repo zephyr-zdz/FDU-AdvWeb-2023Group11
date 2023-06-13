@@ -31,7 +31,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.email = window.sessionStorage.getItem('email')!;
 
     // 当前用户过关成绩
-    this.http.get<{ schedule: number }>('http://localhost:8000/api/user/schedule', {
+    this.http.get<{ schedule: number }>('http://124.221.137.186:8080/api/user/getSchedule', {
       params: { email: this.email } 
     }).subscribe(
       response => {
@@ -43,7 +43,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     );
     
     // 所有人通关 画表
-    this.http.get<{ allSchedule: number[] }>('http://localhost:8000/api/user/all').subscribe(
+    this.http.get<{ allSchedule: number[] }>('http://124.221.137.186:8080/api/user/statOfSchedule').subscribe(
       response => {
         this.allUserSchedule = response.allSchedule;
       },
@@ -101,7 +101,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   enterWorld() {
-    var world_url = 'http://127.0.0.1:2002?'+'email='+this.email+'&cloth='+this.selectedClothes;
+    var world_url = 'http://124.221.137.186:2002?'+'email='+this.email+'&cloth='+this.selectedClothes;
     window.location.href = world_url;  // 跳转到指定页面  
   }
 }
