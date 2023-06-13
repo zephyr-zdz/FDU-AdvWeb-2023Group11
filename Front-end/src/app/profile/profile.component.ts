@@ -18,6 +18,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   selectedClothes!: string;
   usersSchedule!: number;
   email!: string;
+  allUserSchedule!: number[];
 
   constructor(private route: ActivatedRoute,private router: Router, public http: HttpClient) { }
 
@@ -29,6 +30,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
     this.email = window.sessionStorage.getItem('email')!;
 
+    // 当前用户过关成绩
     this.http.get<{ schedule: number }>('http://localhost:8000/api/user/schedule', {
       params: { email: this.email } 
     }).subscribe(
@@ -39,11 +41,19 @@ export class ProfileComponent implements OnInit, AfterViewInit {
         console.error('Failed to fetch level:', error);
       }
     );
+    
+    // 所有人通关 画表
+    this.http.get<{ allSchedule: number[] }>('http://localhost:8000/api/user/all').subscribe(
+      response => {
+        this.allUserSchedule = response.allSchedule;
+      },
+      error => {
+        console.error('Failed to fetch level:', error);
+      }
+    );
 
     this.usersSchedule = 6;
   }
-
-  //TODO 防止未登录
 
   ngAfterViewInit() {
     this.createBarChart();
@@ -53,16 +63,13 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     const ctx = this.barChartCanvas.nativeElement.getContext('2d');
     Chart.register(...registerables);
 
-    // 从服务端获取的数据
-    const dataFromServer = [4, 5, 2, 4, 5, 1];
-
     new Chart(ctx, {
       type: 'bar',
       data: {
         labels: ['第一关', '第二关', '第三关','第四关', '第五关', '第六关'], 
         datasets: [{
           label: '人数',
-          data: dataFromServer,
+          data: this.allUserSchedule,
           backgroundColor: 'rgba(75, 192, 192, 0.2)',
           borderColor: 'rgba(75, 192, 192, 1)',
           borderWidth: 1
