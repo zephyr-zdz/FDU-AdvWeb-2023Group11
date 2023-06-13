@@ -3,10 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.backend.mapper.UserMapper">
-    <!--    User findUserByEmail(String email);-->
-    <!--    User findUserByEmailAndPassword(String email, String password);-->
-    <!--    User findUserByUserId(int id);-->
-
     <select id="findUserByEmail" resultType="com.example.backend.entity.User">
         SELECT * FROM users WHERE email = #{email}
     </select>
@@ -16,7 +12,15 @@
     <select id="findUserByUserId" resultType="com.example.backend.entity.User">
         SELECT * FROM users WHERE userId = #{id}
     </select>
-    <select id="createUser" resultType="com.example.backend.entity.User">
+    <insert id="createUser" parameterType="com.example.backend.entity.User">
         INSERT INTO users (email, password, schedule) VALUES (#{email}, #{password}, 0)
+    </insert>
+
+    <update id="updateUser" parameterType="com.example.backend.entity.User">
+        UPDATE users SET email = #{email}, password = #{password}, schedule = #{schedule} WHERE userId = #{userId}
+    </update>
+    <!--countSchedule-->
+    <select id="countSchedule" resultType="int">
+        SELECT COUNT(*) FROM users WHERE schedule = #{schedule}
     </select>
 </mapper>

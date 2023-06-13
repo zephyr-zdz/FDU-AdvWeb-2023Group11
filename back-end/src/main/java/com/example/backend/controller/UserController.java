@@ -2,10 +2,7 @@ package com.example.backend.controller;
 
 import com.example.backend.entity.User;
 import com.example.backend.service.UserService;
-import com.example.backend.util.JwtUtil;
 import com.example.backend.util.Response;
-import io.jsonwebtoken.Claims;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,23 +38,13 @@ public class UserController {
     }
 
     @PostMapping("/updateSchedule")
-    public ResponseEntity<Response<User>> updateSchedule(@RequestParam(value = "schedule") int schedule, @RequestParam(value = "email") String email) {
+    public ResponseEntity<Response<Integer>> updateSchedule(@RequestParam(value = "schedule") int schedule, @RequestParam(value = "email") String email) {
         return ResponseEntity.ok(userService.updateSchedule(email, schedule));
     }
 
     @GetMapping("/statOfSchedule")
     public ResponseEntity<Response<List<Integer>>> statOfSchedule() {
         return ResponseEntity.ok(userService.statOfSchedule());
-    }
-
-    @GetMapping("/getStage")
-    public ResponseEntity<Response<Integer>> getStage(@RequestParam(value = "username") String email) {
-        return ResponseEntity.ok(userService.getStage(email));
-    }
-
-    @PostMapping("/updateStage")
-    public ResponseEntity<Response<Integer>> updateStage(@RequestParam(value = "stage") int stage, @RequestParam(value = "username") String email) {
-        return ResponseEntity.ok(userService.updateStage(email, stage));
     }
 
 }

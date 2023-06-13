@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Response<User> login(String email, String password) {
         try (SqlSession sqlSession = SqlSessionLoader.getSqlSession()) {
-            User user = sqlSession.selectOne("UserMapper.findUserByEmail", email);
+            User user = sqlSession.selectOne("findUserByEmail", email);
             if (user == null) {
                 return new Response<>(1, "用户未注册", null);
             } else if (!user.getPassword().equals(password)) {
@@ -33,11 +33,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Response<User> register(String email, String password) {
         try (SqlSession sqlSession = SqlSessionLoader.getSqlSession()) {
-            User user = sqlSession.selectOne("UserMapper.findUserByEmail", email);
+            User user = sqlSession.selectOne("findUserByEmail", email);
             if (user != null) {
                 return new Response<>(1, "用户已经存在", null);
             } else {
-                sqlSession.insert("UserMapper.createUser", new User(email, password));
+                sqlSession.insert("createUser", new User(email, password));
                 sqlSession.commit();
                 return new Response<>(0, "Register successfully", null);
             }
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Response<Integer> getSchedule(String email) {
         try (SqlSession sqlSession = SqlSessionLoader.getSqlSession()) {
-            User user = sqlSession.selectOne("UserMapper.findUserByEmail", email);
+            User user = sqlSession.selectOne("findUserByEmail", email);
             if (user == null) {
                 return new Response<>(1, "User not found", null);
             }
@@ -67,32 +67,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Response<User> updateSchedule(String email, int schedule) {
+    public Response<Integer> updateSchedule(String email, int schedule) {
         try (SqlSession sqlSession = SqlSessionLoader.getSqlSession()) {
-            User user = sqlSession.selectOne("UserMapper.findUserByEmail", email);
+            User user = sqlSession.selectOne("findUserByEmail", email);
             if (user == null) {
                 return new Response<>(1, "User not found", null);
             }
             if (schedule > user.getSchedule()) {
                 user.setSchedule(schedule);
-                sqlSession.update("UserMapper.updateUser", user);
+                sqlSession.update("updateUser", user);
                 sqlSession.commit();
-                return new Response<>(0, "Update schedule successfully", user);
+                return new Response<>(0, "Update schedule successfully", null);
             } else {
-                return new Response<>(1, "Update schedule failed", null);
+                return new Response<>(0, "Not Update schedule", null);
             }
         } catch (Exception e) {
             e.printStackTrace();
             return new Response<>(1, "Update schedule failed", null);
         }
     }
-
     @Override
     public Response<List<Integer>> statOfSchedule() { // count each schedule(1,2,3,4,5,6)
         try (SqlSession sqlSession = SqlSessionLoader.getSqlSession()) {
             List<Integer> list = new ArrayList<>();
             for (int i = 1; i <= 6; i++) {
-                Integer count = sqlSession.selectOne("UserMapper.countSchedule", i);
+                Integer count = sqlSession.selectOne("countSchedule", i);
                 if (count == null) {
                     return new Response<>(1, "Get stat failed", null);
                 }
