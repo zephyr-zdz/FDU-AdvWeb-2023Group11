@@ -27,8 +27,9 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Response<User>> register(@RequestParam(value = "email") String email,
-                                                   @RequestParam(value = "password") String password) {
+    public ResponseEntity<Response<User>> register(@RequestBody User user) {
+        String email = user.getEmail();
+        String password = user.getPassword();
         return ResponseEntity.ok(userService.register(email, password));
     }
 
