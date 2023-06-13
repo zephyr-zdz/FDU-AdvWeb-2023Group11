@@ -1,6 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Chart, registerables } from 'chart.js';
+import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+
+
 
 @Component({
   selector: 'app-profile',
@@ -12,13 +16,34 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   barChartCanvas!: ElementRef;
 
   selectedClothes!: string;
+  usersSchedule!: number;
   email!: string;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute,private router: Router, public http: HttpClient) { }
 
   ngOnInit() {
-    this.email = this.route.snapshot.paramMap.get('email')!;
+    if(!window.sessionStorage.getItem('email')){
+      window.alert("请先登录")
+      this.router.navigate(['/login']);
+    }
+
+    this.email = window.sessionStorage.getItem('email')!;
+
+    this.http.get<{ schedule: number }>('http://localhost:8000/api/user/schedule', {
+      params: { email: this.email } 
+    }).subscribe(
+      response => {
+        this.usersSchedule = response.schedule;
+      },
+      error => {
+        console.error('Failed to fetch level:', error);
+      }
+    );
+
+    this.usersSchedule = 6;
   }
+
+  //TODO 防止未登录
 
   ngAfterViewInit() {
     this.createBarChart();
@@ -66,5 +91,10 @@ export class ProfileComponent implements OnInit, AfterViewInit {
         }
       }
     });
+  }
+
+  enterWorld() {
+    var world_url = 'http://127.0.0.1:2002?'+'email='+this.email+'&cloth='+this.selectedClothes;
+    window.location.href = world_url;  // 跳转到指定页面  
   }
 }

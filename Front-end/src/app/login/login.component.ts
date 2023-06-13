@@ -26,11 +26,12 @@ export class LoginComponent implements OnInit {
       }, httpOptions).subscribe((response: any) => {
         window.alert(response.msg);
         if (response.msg === "登陆成功") {
-          this.router.navigate(['/profile', { email: this.email }]);
+          window.sessionStorage.setItem("email",this.email);
+          this.router.navigate(['/profile']);
         }
       });
-  
-  
+    // window.sessionStorage.setItem("email",this.email);
+    // this.router.navigate(['/profile']);
   }
 
   ngOnInit() { }

@@ -13,16 +13,16 @@
 <!-- 'BeachBabe', 'BusinessMan', 'Doctor', 'FireFighter', 'Housewife', 'Policeman', 
 'Prostitute', 'Punk', 'RiotCop', 'Roadworker', 'Robber', 'Sheriff', 'Streetman', 'Waitress' -->
     <select [(ngModel)]="selectedClothes">
-        <option value=1>BeachBabe</option>
-        <option value=2>BusinessMan</option>
-        <option value=3>Doctor</option>
-        <option value=4>FireFighter</option>
-        <option value=5>Housewife</option>
-        <option value=6>Policeman</option>
-        <option value=7>Prostitute</option>
-        <option value=8>Punk</option>
-        <option value=9>RiotCop</option>
-        <option value=10>Roadworker</option>
+        <option value=1 >BeachBabe</option>
+        <option value=2 *ngIf="usersSchedule >= 1 ">BusinessMan</option>
+        <option value=3 *ngIf="usersSchedule >= 2 ">Doctor</option>
+        <option value=4 *ngIf="usersSchedule >= 3 ">FireFighter</option>
+        <option value=5 *ngIf="usersSchedule >= 4 ">Housewife</option>
+        <option value=6 *ngIf="usersSchedule >= 5 ">Policeman</option>
+        <option value=7 *ngIf="usersSchedule >= 6 ">Prostitute</option>
+        <option value=8 *ngIf="usersSchedule >= 6 ">Punk</option>
+        <option value=9 *ngIf="usersSchedule >= 6 ">RiotCop</option>
+        <option value=10 *ngIf="usersSchedule >= 6 ">Roadworker</option>
     </select>
     <p class="small-text">闯关越多，解锁的人物模型也越多哟~</p>
 
@@ -31,6 +31,6 @@
     <canvas #barChartCanvas></canvas>
   </div>
 
-      <button class="btn enter-world-btn">进入世界</button>
+      <button class="btn enter-world-btn" (click)="enterWorld()">进入世界</button>
 </div>
 
