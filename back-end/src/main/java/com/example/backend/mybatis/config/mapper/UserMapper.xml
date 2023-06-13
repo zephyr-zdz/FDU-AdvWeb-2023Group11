@@ -14,6 +14,9 @@
         SELECT * FROM users WHERE email = #{email} AND password = #{password}
     </select>
     <select id="findUserByUserId" resultType="com.example.backend.entity.User">
-        SELECT * FROM users WHERE user_id = #{id}
+        SELECT * FROM users WHERE userId = #{id}
+    </select>
+    <select id="createUser" resultType="com.example.backend.entity.User">
+        INSERT INTO users (email, password, schedule) VALUES (#{email}, #{password}, 0)
     </select>
 </mapper>
