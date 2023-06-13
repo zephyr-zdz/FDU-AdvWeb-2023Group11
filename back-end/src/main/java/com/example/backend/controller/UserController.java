@@ -17,40 +17,44 @@ public class UserController {
     private final UserService userService;
 
     @Autowired
-    UserController(UserService userService){
-        this.userService=userService;
+    UserController(UserService userService) {
+        this.userService = userService;
     }
 
-    private int getIdFromToken(HttpServletRequest request){
-        Claims claims=JwtUtil.parse(request.getHeader("Authorization"));
-        if (claims==null) return -1;
+    private int getIdFromToken(HttpServletRequest request) {
+        Claims claims = JwtUtil.parse(request.getHeader("Authorization"));
+        if (claims == null) return -1;
         return (int) claims.get("id");
     }
+
     @PostMapping("/login")
     public ResponseEntity<Response<User>> login(@RequestParam(value = "email") String email,
                                                 @RequestParam(value = "password") String password,
-                                                HttpServletResponse response){
-        Response<User> result=userService.login(email, password);
-        if (result.getCode()==1){
-            String accessToken = JwtUtil.createJWT(result.getData().getUserId());
-            response.setHeader("Authorization",accessToken);
+                                                HttpServletResponse response) {
+        Response<User> result = userService.login(email, password);
+        if (result.getCode() == 1) {
+            String accessToken = JwtUtil.createJWT(result.getData().getUserId()); // 生成token
+            response.setHeader("Authorization", accessToken); // 将token放在响应头
         }
         return ResponseEntity.ok(result);
     }
+
     @PostMapping("/register")
     public ResponseEntity<Response<User>> register(@RequestParam(value = "email") String email,
-                                                   @RequestParam(value = "password") String password){
+                                                   @RequestParam(value = "password") String password) {
         return ResponseEntity.ok(userService.register(email, password));
     }
+
     @GetMapping("/getSchedule")
-    public ResponseEntity<Response<Integer>> getSchedule(HttpServletRequest request){
-        int id=getIdFromToken(request);
+    public ResponseEntity<Response<Integer>> getSchedule(HttpServletRequest request) {
+        int id = getIdFromToken(request);
         return ResponseEntity.ok(userService.getSchedule(id));
     }
+
     @PostMapping("/updateSchedule")
     public ResponseEntity<Response<User>> updateSchedule(@RequestParam(value = "schedule") int schedule,
-                                                         HttpServletRequest request){
-        int id=getIdFromToken(request);
-        return ResponseEntity.ok(userService.updateSchedule(id,schedule));
+                                                         HttpServletRequest request) {
+        int id = getIdFromToken(request);
+        return ResponseEntity.ok(userService.updateSchedule(id, schedule));
     }
 }

@@ -12,9 +12,7 @@ public class UserServiceImpl implements UserService {
     // login, register
     @Override
     public Response<User> login(String email, String password) {
-        SqlSession sqlSession = null;
-        try {
-            sqlSession = SqlSessionLoader.getSqlSession();
+        try (SqlSession sqlSession = SqlSessionLoader.getSqlSession()) {
             User user = sqlSession.selectOne("UserMapper.login", email);
             if (user == null) {
                 return new Response<>(1, "User not found", null);
@@ -26,10 +24,6 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             e.printStackTrace();
             return new Response<>(1, "Login failed", null);
-        } finally {
-            if (sqlSession != null) {
-                sqlSession.close();
-            }
         }
     }
 
