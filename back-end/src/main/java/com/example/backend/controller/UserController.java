@@ -21,8 +21,9 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Response<User>> login(@RequestParam(value = "email") String email,
-                                                @RequestParam(value = "password") String password) {
+    public ResponseEntity<Response<User>> login(@RequestBody User user) {
+        String email = user.getEmail();
+        String password = user.getPassword();
         Response<User> result = userService.login(email, password);
         return ResponseEntity.ok(result);
     }

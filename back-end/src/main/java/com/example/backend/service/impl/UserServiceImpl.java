@@ -37,7 +37,9 @@ public class UserServiceImpl implements UserService {
             if (user != null) {
                 return new Response<>(1, "用户已经存在", null);
             } else {
-                sqlSession.insert("createUser", new User(email, password));
+                User newUser = new User(email, password);
+                System.out.println(newUser);
+                sqlSession.insert("createUser", newUser);
                 sqlSession.commit();
                 return new Response<>(0, "Register successfully", null);
             }
