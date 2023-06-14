@@ -105,7 +105,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   enterWorld() {
-    var world_url = 'http://34.225.96.154:2002?'+'email='+this.email+'&cloth='+this.selectedClothes;
+    var world_url = 'http://124.221.137.186:2002?'+'email='+this.email+'&cloth='+this.selectedClothes;
     window.location.href = world_url;  // 跳转到指定页面
   }
 }
