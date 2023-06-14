@@ -15,7 +15,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   @ViewChild('barChartCanvas', { static: false })
   barChartCanvas!: ElementRef;
 
-  selectedClothes!: string;
+  selectedClothes: string = '0';
   usersSchedule!: number;
   email!: string;
   allUserSchedule!: number[];
@@ -31,21 +31,26 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.email = window.sessionStorage.getItem('email')!;
 
     // 当前用户过关成绩
-    this.http.get<{ schedule: number }>('http://124.221.137.186:8080/api/user/getSchedule', {
-      params: { email: this.email } 
+    this.http.get('http://localhost:8080/api/user/getSchedule', {
+      params: { email: this.email }
     }).subscribe(
-      response => {
-        this.usersSchedule = response.schedule;
+      (response: any) => {
+        console.log("myscore:"+response.data);
+        this.usersSchedule = response.data;
       },
       error => {
         console.error('Failed to fetch level:', error);
       }
     );
-    
+
     // 所有人通关 画表
-    this.http.get<{ allSchedule: number[] }>('http://124.221.137.186:8080/api/user/statOfSchedule').subscribe(
-      response => {
-        this.allUserSchedule = response.allSchedule;
+    this.http.get('http://localhost:8080/api/user/statOfSchedule').subscribe(
+      (response: any) => {
+        this.allUserSchedule = [];
+        response.data.forEach((item: any) => {
+          this.allUserSchedule.push(item);
+        });
+        this.createBarChart();
       },
       error => {
         console.error('Failed to fetch level:', error);
@@ -56,7 +61,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.createBarChart();
   }
 
   createBarChart() {
@@ -66,7 +70,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['第一关', '第二关', '第三关','第四关', '第五关', '第六关'], 
+        labels: ['第一关', '第二关', '第三关','第四关', '第五关', '第六关'],
         datasets: [{
           label: '人数',
           data: this.allUserSchedule,
@@ -83,7 +87,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
             beginAtZero: true,
             ticks: {
               stepSize: 1
-            }          
+            }
           }
         },
         plugins: {
@@ -101,7 +105,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   enterWorld() {
-    var world_url = 'http://124.221.137.186:2002?'+'email='+this.email+'&cloth='+this.selectedClothes;
-    window.location.href = world_url;  // 跳转到指定页面  
+    var world_url = 'http://localhost:2002?'+'email='+this.email+'&cloth='+this.selectedClothes;
+    window.location.href = world_url;  // 跳转到指定页面
   }
 }

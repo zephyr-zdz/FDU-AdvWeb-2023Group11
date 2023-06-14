@@ -10,19 +10,19 @@
 <div class="profile-container">
     <h2>个人中心</h2>
     <span class="description">人物造型</span>
-<!-- 'BeachBabe', 'BusinessMan', 'Doctor', 'FireFighter', 'Housewife', 'Policeman', 
+<!-- 'BeachBabe', 'BusinessMan', 'Doctor', 'FireFighter', 'Housewife', 'Policeman',
 'Prostitute', 'Punk', 'RiotCop', 'Roadworker', 'Robber', 'Sheriff', 'Streetman', 'Waitress' -->
     <select [(ngModel)]="selectedClothes">
-        <option value=1 >BeachBabe</option>
-        <option value=2 *ngIf="usersSchedule >= 1 ">BusinessMan</option>
-        <option value=3 *ngIf="usersSchedule >= 2 ">Doctor</option>
-        <option value=4 *ngIf="usersSchedule >= 3 ">FireFighter</option>
-        <option value=5 *ngIf="usersSchedule >= 4 ">Housewife</option>
-        <option value=6 *ngIf="usersSchedule >= 5 ">Policeman</option>
-        <option value=7 *ngIf="usersSchedule >= 6 ">Prostitute</option>
-        <option value=8 *ngIf="usersSchedule >= 6 ">Punk</option>
-        <option value=9 *ngIf="usersSchedule >= 6 ">RiotCop</option>
-        <option value=10 *ngIf="usersSchedule >= 6 ">Roadworker</option>
+        <option value=0 >BeachBabe</option>
+        <option value=1 *ngIf="usersSchedule >= 1 ">BusinessMan</option>
+        <option value=2 *ngIf="usersSchedule >= 2 ">Doctor</option>
+        <option value=3 *ngIf="usersSchedule >= 3 ">FireFighter</option>
+        <option value=4 *ngIf="usersSchedule >= 4 ">Housewife</option>
+        <option value=5 *ngIf="usersSchedule >= 5 ">Policeman</option>
+        <option value=6 *ngIf="usersSchedule >= 6 ">Prostitute</option>
+        <option value=7 *ngIf="usersSchedule >= 6 ">Punk</option>
+        <option value=8 *ngIf="usersSchedule >= 6 ">RiotCop</option>
+        <option value=9 *ngIf="usersSchedule >= 6 ">Roadworker</option>
     </select>
     <p class="small-text">闯关越多，解锁的人物模型也越多哟~</p>
 
