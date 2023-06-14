@@ -11,7 +11,7 @@ export class LoginComponent implements OnInit {
   email!: string;
   password!: string;
 
-  private login_url = "http://localhost:8080/api/user/login";
+  private login_url = "http://124.221.137.186:8080/api/user/login";
 
   constructor(private router: Router, public http: HttpClient) { }
 

@@ -31,7 +31,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.email = window.sessionStorage.getItem('email')!;
 
     // 当前用户过关成绩
-    this.http.get('http://localhost:8080/api/user/getSchedule', {
+    this.http.get('http://124.221.137.186:8080/api/user/getSchedule', {
       params: { email: this.email }
     }).subscribe(
       (response: any) => {
@@ -44,7 +44,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     );
 
     // 所有人通关 画表
-    this.http.get('http://localhost:8080/api/user/statOfSchedule').subscribe(
+    this.http.get('http://124.221.137.186:8080/api/user/statOfSchedule').subscribe(
       (response: any) => {
         this.allUserSchedule = [];
         response.data.forEach((item: any) => {
