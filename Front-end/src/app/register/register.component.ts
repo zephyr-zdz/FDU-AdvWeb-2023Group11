@@ -12,7 +12,7 @@ export class RegisterComponent implements OnInit{
   password!: string;
   confirmPassword!: string;
 
-  private reg_url = "http://124.221.137.186:8080/api/user/register";
+  private reg_url = "http://localhost:8080/api/user/register";
 
   constructor(private router: Router,public http: HttpClient) {}
 
@@ -36,6 +36,6 @@ export class RegisterComponent implements OnInit{
         }
       });
   }
-  
+
   ngOnInit() {}
 }
